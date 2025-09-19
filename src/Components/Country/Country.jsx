@@ -1,15 +1,32 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import "./Country.css";
 
-const Country = ({ country }) => {
+const Country = ({ country, handleVisitedCountries }) => {
 
-  const [state, setState] = useState(false);
+  const [visited, setVisited] = useState(false);
   function handleVisited() {
-    const updateState = !state;
-    setState(updateState) ;
+    // // Using if else
+        if(visited){
+            let updateVisited = false ;
+            setVisited(updateVisited) ;
+        }
+        else{
+            let updateVisited = true ;
+            setVisited(updateVisited) ;
+            handleVisitedCountries(country) ;
+        }
+
+    // // Using Ternary operator
+    // const updateVisited = visited ? false : true  ;
+    // setVisited(updateVisited) ;
+
+    // // Using logical not
+    // const updateVisited = !visited;
+    // setVisited(updateVisited) ;
+    // handleVisitedCountries(country) ;
   }
   return (
-    <div className="country">
+    <div className={`country ${visited && 'country_visited'} `}>
       <img src={country.flags.flags.png} alt={country.flags.flags.alt} />
       <h4>Name : {country.name.common} </h4>
       <p>Population : {country.population.population} </p>
@@ -18,7 +35,8 @@ const Country = ({ country }) => {
         Area : {country.area.area}{" "}
         {country.area.area > 30000 ? "Big Country" : "Small Country"}{" "}
       </p>
-      <button onClick={handleVisited}>{state ? 'Visited' : "Not Visited"}</button>
+      <button onClick={handleVisited}>{visited ? 'Visited' : "Not Visited"}</button>
+      <button>Add Visited Flag</button>
     </div>
   );
 };
